@@ -1,0 +1,40 @@
+<div class="confs">
+    <mat-card class="confs__card">
+        <mat-card-header> Speakers list : </mat-card-header>
+        <br>
+        <mat-accordion>
+            <mat-expansion-panel
+                *ngFor="let spk of speakers$ | async ; let i = index" class="confs__list"
+                (opened)="openPanel(spk)">
+                <!-- panel header  -->
+                <mat-expansion-panel-header 
+                (mouseenter)="getInfo(spk)"
+                [matTooltip]="info$ |async">
+                    <mat-panel-title>
+                        {{spk.data[0].name}} :
+                        {{spk.data[0].value}}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <!-- sessions of speaker  -->
+                <ul class="sessions">
+                    <ng-container *ngIf="sessions$ | async as sesstions; else Loading">
+                        <li *ngFor="let session of sesstions  ; let i = index">
+                            <div *ngFor="let item of session.data" >
+                                {{item.name}} : {{item.value}}
+                            </div>
+                            <br>
+                        </li>
+                    </ng-container>
+                    <ng-template #Loading> Loading ... </ng-template>
+                </ul>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+    </mat-card>
+
+    <div>
+
+    </div>
+
+</div>
